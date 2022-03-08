@@ -1,5 +1,6 @@
 package com.shiftkey.codingchallenge.model
 
+import ShiftsItem
 import com.google.gson.annotations.SerializedName
 
 data class DataItem(
