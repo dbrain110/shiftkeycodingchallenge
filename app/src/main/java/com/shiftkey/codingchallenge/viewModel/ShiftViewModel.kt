@@ -8,11 +8,13 @@ import kotlinx.coroutines.*
 
 class ShiftViewModel constructor(private val repo: Repository) : ViewModel() {
 
-    val shiftList = MediatorLiveData<List<AvailableShiftResponse>>()
+    private val shiftList = MediatorLiveData<List<AvailableShiftResponse>>()
     val errorMessage = MutableLiveData<String>()
     val loading = MutableLiveData<Boolean>()
 
-    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    fun showShifts(): LiveData<List<AvailableShiftResponse>> = shiftList
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
     var job: Job? = null
@@ -33,7 +35,7 @@ class ShiftViewModel constructor(private val repo: Repository) : ViewModel() {
     }
 //    fun getShifts(){
 //        viewModelScope.launch {
-//            _shifts.postValue(repo.getShifts(lat= "33", lng="-97", radius= "20", start="2022-03-08", end="2022-03-15"))
+//            shiftList.postValue(repo.getShifts(lat= "33", lng="-97", radius= "20", start="2022-03-08", end="2022-03-15"))
 //        }
 //    }
 
