@@ -7,25 +7,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.ListFragment">
+
         <ProgressBar
             android:id="@+id/progressDialog"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:indeterminateTint="@color/purple_200"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rv_main"
-            tools:listitem="@layout/list_items"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/list_items" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

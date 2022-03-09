@@ -9,5 +9,5 @@ class ApiClient {
         ApiEndPoint.retrofitInstance.create(ShiftService::class.java)
 
     suspend fun getAvailableShifts(lat: String, lng: String, radius: String, start: String, end: String):
-            Response<List<AvailableShiftResponse>> = apiService.getListOfShiftsAvailable(lat = lat, lng = lng, radius = radius, start = start, end = end)
+            Response<AvailableShiftResponse> = apiService.getListOfShiftsAvailable(lat = lat, lng = lng, radius = radius, start = start, end = end)
 }

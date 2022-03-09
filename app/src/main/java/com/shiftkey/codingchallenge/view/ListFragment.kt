@@ -17,8 +17,13 @@ import com.shiftkey.codingchallenge.adapter.ShiftAdapter
 import com.shiftkey.codingchallenge.databinding.ListFragmentBinding
 import com.shiftkey.codingchallenge.model.AvailableShiftResponse
 import com.shiftkey.codingchallenge.model.DataItem
+import com.shiftkey.codingchallenge.model.ShiftsItem
+import com.shiftkey.codingchallenge.network.Repository
 import com.shiftkey.codingchallenge.viewModel.ShiftViewModel
+import com.shiftkey.codingchallenge.viewModel.ShiftViewModelFactory
 import kotlinx.android.synthetic.main.list_fragment.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class ListFragment : Fragment() {
 
@@ -31,8 +36,9 @@ class ListFragment : Fragment() {
     private val bind get() = _bind
     private lateinit var shiftViewModel: ShiftViewModel
     private lateinit var shiftAdapter: ShiftAdapter
-    private var availableShiftResponse: List<AvailableShiftResponse> = ArrayList()
-    private var shiftsId: DataItem? = null
+    private var availableShiftResponse: List<ShiftsItem?> = ArrayList()
+    private var shiftsId: ShiftsItem? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,9 +46,9 @@ class ListFragment : Fragment() {
     ): View? {
         lazyLoadShifts()
         _bind = ListFragmentBinding.inflate(inflater,container,false)
-        availableShiftResponse = arguments?.get("shiftList") as List<AvailableShiftResponse>
+//        (arguments?.get("mShift") as? List<AvailableShiftResponse>)?.let { availableShiftResponse = it }
         shiftAdapter = ShiftAdapter { position ->
-            shiftsId = availableShiftResponse[position].data?.get(1)
+            shiftsId = availableShiftResponse[position]
             launchNavigation()
         }
         return bind?.root
@@ -53,38 +59,52 @@ class ListFragment : Fragment() {
         super.onResume()
         rv_main.apply{
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
-            shiftAdapter.loadShifts(availableShiftResponse)
+            shiftAdapter.loadShifts(availableShiftResponse as List<ShiftsItem>)
             shiftAdapter.notifyDataSetChanged()
             adapter = shiftAdapter
         }
     }
 
     private fun lazyLoadShifts() {
-        shiftViewModel = ViewModelProvider(this).get(ShiftViewModel::class.java)
+        shiftViewModel = ViewModelProvider(this, ShiftViewModelFactory(Repository.INSTANCE)).get(ShiftViewModel::class.java)
         shiftViewModel.showShifts().observe(viewLifecycleOwner, Observer { shiftList ->
-            availableShiftResponse = shiftList
+            if (shiftList != null) {
+                availableShiftResponse = shiftList
+            }
+            shiftAdapter.loadShifts(shiftList as List<ShiftsItem>)
+            shiftAdapter.notifyDataSetChanged()
 
         })
         shiftViewModel.fetchShifts()
         shiftViewModel.errorMessage.observe(this, {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         })
+        shiftViewModel.loading.observe(this, Observer {
+            if (it){
+                bind?.progressDialog?.visibility = View.VISIBLE
+            }else{
+                bind?.progressDialog?.visibility = View.GONE
+            }
+        })
     }
 
     private fun launchNavigation() {
         val shiftModel = getShifts()
-        val mShifts = mutableListOf<AvailableShiftResponse>()
+        val mShifts = mutableListOf<ShiftsItem>()
         mShifts.add(shiftModel)
         val bundle = bundleOf("mShifts" to mShifts)
         this.findNavController().navigate(R.id.action_baseFragment_to_detailsFragment)
 
     }
+//use for formatting
 
-    private fun getShifts(): AvailableShiftResponse {
-        var dataItem = AvailableShiftResponse()
+
+
+    private fun getShifts(): ShiftsItem {
+        var dataItem = ShiftsItem()
         availableShiftResponse.forEach { shifts ->
-            if (shiftsId == shifts.data?.get(1))
-                dataItem = shifts
+            if (shiftsId == shifts)
+                dataItem = shifts!!
         }
         return dataItem
 

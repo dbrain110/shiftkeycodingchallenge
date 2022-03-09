@@ -14,5 +14,5 @@ interface ShiftService {
         @Query("radius") radius: String,
         @Query("start") start: String,
         @Query("end") end: String
-    ): Response<List<AvailableShiftResponse>>
+    ): Response<AvailableShiftResponse>
 }

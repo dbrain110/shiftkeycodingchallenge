@@ -3,7 +3,7 @@ package com.shiftkey.codingchallenge.model
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
+//@JsonClass(generateAdapter = true)
 data class AvailableShiftResponse(
 
 	@field:SerializedName("data")

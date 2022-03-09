@@ -7,7 +7,7 @@
 
         <variable
             name="shiftModel"
-            type="com.shiftkey.codingchallenge.model.AvailableShiftResponse" />
+            type="com.shiftkey.codingchallenge.model.ShiftsItem" />
 
         <variable
             name="shiftData"
@@ -16,6 +16,9 @@
         <variable
             name="shifts"
             type="com.shiftkey.codingchallenge.model.ShiftsItem" />
+        <variable
+            name="date_time"
+            type="com.shiftkey.codingchallenge.utils.FormattedDateTimeUtil" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -53,22 +56,33 @@
                 android:id="@+id/tv_shift_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{shiftData.date}"
-                android:textSize="18sp"
+                android:text="@{`Start Date: `+date_time.formattedStartDate}"
+                android:textSize="17sp"
                 android:textStyle="italic"
                 android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_shift_kind"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_shift_kind"
                 app:layout_constraintBottom_toTopOf="@id/tv_start_time"
                 tools:text="0000-00-00" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{`End Date: `+date_time.formattedEndDate}"
+                android:textSize="17sp"
+                app:layout_constraintStart_toEndOf="@id/tv_shift_date"
+                app:layout_constraintTop_toBottomOf="@id/tv_shift_kind"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_end_time"
+                tools:text="End Date: 00:00"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@{`Start Time: `+shifts.startTime}"
+                android:text="@{`Start Time: `+date_time.startTimeToDisplayTime}"
                 android:textSize="16sp"
                 tools:text="Start Time: 00:00"
                 app:layout_constraintEnd_toStartOf="@id/tv_end_time"
@@ -82,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@{`End Time: `+shifts.endTime}"
+                android:text="@{`End Time: `+date_time.endTimeToDisplayTime}"
                 app:layout_constraintStart_toEndOf="@id/tv_start_time"
                 app:layout_constraintTop_toBottomOf="@id/tv_shift_date"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +108,7 @@
                 android:id="@+id/tv_facility_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{`Facility Type: `+shifts.facilityType}"
+                android:text="@{`Facility Type: `+shifts.facilityType.name}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_start_time"
@@ -106,7 +120,7 @@
                 android:id="@+id/tv_specialty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{`Localized Specialty: `+shifts.localizedSpecialty}"
+                android:text="@{`Localized Specialty: `+shifts.localizedSpecialty.name}"
                 tools:text="Localized Specialty"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -3,16 +3,17 @@ package com.shiftkey.codingchallenge.viewModel
 import android.app.Application
 import androidx.lifecycle.*
 import com.shiftkey.codingchallenge.model.AvailableShiftResponse
+import com.shiftkey.codingchallenge.model.ShiftsItem
 import com.shiftkey.codingchallenge.network.Repository
 import kotlinx.coroutines.*
 
 class ShiftViewModel constructor(private val repo: Repository) : ViewModel() {
 
-    private val shiftList = MediatorLiveData<List<AvailableShiftResponse>>()
+    private val _shiftList = MediatorLiveData<List<ShiftsItem?>?>()
     val errorMessage = MutableLiveData<String>()
     val loading = MutableLiveData<Boolean>()
 
-    fun showShifts(): LiveData<List<AvailableShiftResponse>> = shiftList
+    fun showShifts(): LiveData<List<ShiftsItem?>?> = _shiftList
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
@@ -25,7 +26,7 @@ class ShiftViewModel constructor(private val repo: Repository) : ViewModel() {
             val response = repo.getShifts(lat= "33", lng="-97", radius= "20", start="2022-03-08", end="2022-03-15")
             withContext(Dispatchers.Main){
                 if (response.isSuccessful){
-                    shiftList.postValue(response.body())
+                    _shiftList.postValue(response.body()?.data?.flatMap { it?.shifts!! })
                     loading.value = false
                 }else{
                     onError("Error : ${response.message()}")
@@ -33,15 +34,20 @@ class ShiftViewModel constructor(private val repo: Repository) : ViewModel() {
             }
         }
     }
-//    fun getShifts(){
+//    fun fetchShifts(){ need to fix the element
 //        viewModelScope.launch {
 //            shiftList.postValue(repo.getShifts(lat= "33", lng="-97", radius= "20", start="2022-03-08", end="2022-03-15"))
 //        }
 //    }
 
     private fun onError(message: String) {
-        errorMessage.value = message
-        loading.value = false
+        errorMessage.postValue(message)
+        loading.postValue(false)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 
 }
