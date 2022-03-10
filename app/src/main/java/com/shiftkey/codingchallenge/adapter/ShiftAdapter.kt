@@ -1,20 +1,13 @@
 package com.shiftkey.codingchallenge.adapter
 
-import android.annotation.SuppressLint
 import android.os.Build
-import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.shiftkey.codingchallenge.databinding.ListItemsBinding
-import com.shiftkey.codingchallenge.model.AvailableShiftResponse
 import com.shiftkey.codingchallenge.model.ShiftsItem
 import com.shiftkey.codingchallenge.utils.FormattedDateTimeUtil
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class ShiftAdapter(val listener: (Int) -> Unit) :
     RecyclerView.Adapter<ShiftAdapter.ShiftViewHolder>() {

@@ -2,16 +2,11 @@ package com.shiftkey.codingchallenge.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.shiftkey.codingchallenge.R
-import com.shiftkey.codingchallenge.adapter.ShiftAdapter
 import com.shiftkey.codingchallenge.databinding.ActivityMainBinding
-import com.shiftkey.codingchallenge.viewModel.ShiftViewModel
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {

@@ -1,7 +1,6 @@
 package com.shiftkey.codingchallenge.network
 
 import com.shiftkey.codingchallenge.model.AvailableShiftResponse
-import io.reactivex.Single
 import retrofit2.Response
 
 class ApiClient {

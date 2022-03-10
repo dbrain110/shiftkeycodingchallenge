@@ -1,14 +1,10 @@
 package com.shiftkey.codingchallenge.utils
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.shiftkey.codingchallenge.model.ShiftsItem
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 class FormattedDateTimeUtil(val shiftsItem: ShiftsItem) {
 
@@ -31,7 +27,7 @@ class FormattedDateTimeUtil(val shiftsItem: ShiftsItem) {
         )
 
     @RequiresApi(Build.VERSION_CODES.O)
-    val endTimeToDisplayTime =
+    val endTimeToDisplayTime: String =
         LocalDateTime.parse(shiftsItem.endTime, DateTimeFormatter.ISO_OFFSET_DATE_TIME).format(
             DateTimeFormatter.ofPattern("h:mma")
         )

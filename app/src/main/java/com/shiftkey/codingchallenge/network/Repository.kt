@@ -1,9 +1,5 @@
 package com.shiftkey.codingchallenge.network
 
-import com.shiftkey.codingchallenge.model.AvailableShiftResponse
-import io.reactivex.Single
-import retrofit2.HttpException
-import retrofit2.Response
 
 class Repository {
     private object RepositoryInstanceHolder {

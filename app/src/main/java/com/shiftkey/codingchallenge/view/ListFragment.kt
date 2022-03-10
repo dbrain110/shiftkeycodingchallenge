@@ -3,7 +3,6 @@ package com.shiftkey.codingchallenge.view
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.shiftkey.codingchallenge.R
-import com.shiftkey.codingchallenge.adapter.EndlessScrollListener
-import com.shiftkey.codingchallenge.adapter.OnLoadMoreListener
 import com.shiftkey.codingchallenge.adapter.ShiftAdapter
 import com.shiftkey.codingchallenge.databinding.FragmentListBinding
 import com.shiftkey.codingchallenge.model.ShiftsItem
