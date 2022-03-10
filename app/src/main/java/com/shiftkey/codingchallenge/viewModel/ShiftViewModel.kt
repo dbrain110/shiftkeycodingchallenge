@@ -1,8 +1,6 @@
 package com.shiftkey.codingchallenge.viewModel
 
-import android.app.Application
 import androidx.lifecycle.*
-import com.shiftkey.codingchallenge.model.AvailableShiftResponse
 import com.shiftkey.codingchallenge.model.ShiftsItem
 import com.shiftkey.codingchallenge.network.Repository
 import kotlinx.coroutines.*
