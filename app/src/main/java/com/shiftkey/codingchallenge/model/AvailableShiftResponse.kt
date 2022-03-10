@@ -1,9 +1,11 @@
 package com.shiftkey.codingchallenge.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 
-//@JsonClass(generateAdapter = true)
+
 data class AvailableShiftResponse(
 
 	@field:SerializedName("data")
@@ -25,6 +27,7 @@ data class Meta(
 	val lat: Int? = null
 )
 
+@Parcelize
 data class Skill(
 
 	@field:SerializedName("color")
@@ -35,8 +38,9 @@ data class Skill(
 
 	@field:SerializedName("id")
 	val id: Int? = null
-)
+): Parcelable
 
+@Parcelize
 data class LocalizedSpecialty(
 
 	@field:SerializedName("specialty")
@@ -56,8 +60,9 @@ data class LocalizedSpecialty(
 
 	@field:SerializedName("abbreviation")
 	val abbreviation: String? = null
-)
+): Parcelable
 
+@Parcelize
 data class ShiftsItem(
 
 	@field:SerializedName("localized_specialty")
@@ -98,8 +103,8 @@ data class ShiftsItem(
 
 	@field:SerializedName("normalized_end_date_time")
 	val normalizedEndDateTime: String? = null
-)
-
+): Parcelable
+@Parcelize
 data class Specialty(
 
 	@field:SerializedName("color")
@@ -113,8 +118,9 @@ data class Specialty(
 
 	@field:SerializedName("abbreviation")
 	val abbreviation: String? = null
-)
+): Parcelable
 
+@Parcelize
 data class FacilityType(
 
 	@field:SerializedName("color")
@@ -125,7 +131,7 @@ data class FacilityType(
 
 	@field:SerializedName("id")
 	val id: Int? = null
-)
+): Parcelable
 
 data class DataItem(
 

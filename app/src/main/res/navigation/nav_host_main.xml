@@ -9,7 +9,7 @@
         android:id="@+id/baseFragment"
         android:name="com.shiftkey.codingchallenge.view.ListFragment"
         android:label="base_fragment"
-        tools:layout="@layout/list_fragment" >
+        tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_baseFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />

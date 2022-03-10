@@ -2,6 +2,7 @@ package com.shiftkey.codingchallenge.adapter
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup

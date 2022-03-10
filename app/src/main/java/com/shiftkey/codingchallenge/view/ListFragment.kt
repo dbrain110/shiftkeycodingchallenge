@@ -3,6 +3,7 @@ package com.shiftkey.codingchallenge.view
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,19 +12,19 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.shiftkey.codingchallenge.R
+import com.shiftkey.codingchallenge.adapter.EndlessScrollListener
+import com.shiftkey.codingchallenge.adapter.OnLoadMoreListener
 import com.shiftkey.codingchallenge.adapter.ShiftAdapter
-import com.shiftkey.codingchallenge.databinding.ListFragmentBinding
-import com.shiftkey.codingchallenge.model.AvailableShiftResponse
-import com.shiftkey.codingchallenge.model.DataItem
+import com.shiftkey.codingchallenge.databinding.FragmentListBinding
 import com.shiftkey.codingchallenge.model.ShiftsItem
 import com.shiftkey.codingchallenge.network.Repository
+import com.shiftkey.codingchallenge.utils.Constants
 import com.shiftkey.codingchallenge.viewModel.ShiftViewModel
 import com.shiftkey.codingchallenge.viewModel.ShiftViewModelFactory
-import kotlinx.android.synthetic.main.list_fragment.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class ListFragment : Fragment() {
 
@@ -32,7 +33,7 @@ class ListFragment : Fragment() {
         fun newInstance() = ListFragment()
     }
 
-    private var _bind: ListFragmentBinding? = null
+    private var _bind: FragmentListBinding? = null
     private val bind get() = _bind
     private lateinit var shiftViewModel: ShiftViewModel
     private lateinit var shiftAdapter: ShiftAdapter
@@ -40,24 +41,27 @@ class ListFragment : Fragment() {
     private var shiftsId: ShiftsItem? = null
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         lazyLoadShifts()
-        _bind = ListFragmentBinding.inflate(inflater,container,false)
-//        (arguments?.get("mShift") as? List<AvailableShiftResponse>)?.let { availableShiftResponse = it }
+        _bind = FragmentListBinding.inflate(inflater,container,false)
         shiftAdapter = ShiftAdapter { position ->
             shiftsId = availableShiftResponse[position]
-            launchNavigation()
+            launchNavigation(shiftsId)
+
         }
         return bind?.root
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
-        rv_main.apply{
+        bind?.rvMain?.apply{
+            DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
             shiftAdapter.loadShifts(availableShiftResponse as List<ShiftsItem>)
             shiftAdapter.notifyDataSetChanged()
@@ -88,25 +92,12 @@ class ListFragment : Fragment() {
         })
     }
 
-    private fun launchNavigation() {
-        val shiftModel = getShifts()
-        val mShifts = mutableListOf<ShiftsItem>()
-        mShifts.add(shiftModel)
-        val bundle = bundleOf("mShifts" to mShifts)
-        this.findNavController().navigate(R.id.action_baseFragment_to_detailsFragment)
-
-    }
-//use for formatting
-
-
-
-    private fun getShifts(): ShiftsItem {
-        var dataItem = ShiftsItem()
-        availableShiftResponse.forEach { shifts ->
-            if (shiftsId == shifts)
-                dataItem = shifts!!
+    private fun launchNavigation(shiftsId: ShiftsItem?) {
+        shiftsId?.let {
+            val bundle = bundleOf(Constants.SHIFT_KEY to it)
+            this.findNavController().navigate(R.id.action_baseFragment_to_detailsFragment, bundle)
         }
-        return dataItem
+
 
     }
 

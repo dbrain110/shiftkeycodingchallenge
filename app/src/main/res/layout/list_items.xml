@@ -4,18 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="shiftModel"
-            type="com.shiftkey.codingchallenge.model.ShiftsItem" />
-
-        <variable
-            name="shiftData"
-            type="com.shiftkey.codingchallenge.model.DataItem" />
-
         <variable
             name="shifts"
             type="com.shiftkey.codingchallenge.model.ShiftsItem" />
+
         <variable
             name="date_time"
             type="com.shiftkey.codingchallenge.utils.FormattedDateTimeUtil" />
@@ -24,58 +16,66 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:elevation="5dp"
-        app:cardBackgroundColor="@android:color/holo_blue_bright"
-        app:cardCornerRadius="15dp">
+        android:elevation="8dp"
+        app:cardCornerRadius="12dp"
+        android:layout_margin="20dp"
+        app:cardBackgroundColor="@android:color/holo_blue_dark"
+        >
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/row_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:padding="8dp">
+            android:layout_gravity="center"
+            android:background="@android:color/holo_blue_bright"
+
+            >
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_shift_kind"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@{shifts.shiftKind}"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_shift_date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tv_shift_date"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Shift Name" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_shift_date"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:gravity="start"
                 android:text="@{`Start Date: `+date_time.formattedStartDate}"
-                android:textSize="17sp"
-                android:textStyle="italic"
-                android:gravity="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/tv_start_time"
+                app:layout_constraintEnd_toStartOf="@id/tv_end_date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_shift_kind"
-                app:layout_constraintBottom_toTopOf="@id/tv_start_time"
-                tools:text="0000-00-00" />
+                tools:text="Start Date: 0000-00-00" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_marginStart="8dp"
+                android:gravity="end"
                 android:text="@{`End Date: `+date_time.formattedEndDate}"
-                android:textSize="17sp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/tv_end_time"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_shift_date"
                 app:layout_constraintTop_toBottomOf="@id/tv_shift_kind"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tv_end_time"
-                tools:text="End Date: 00:00"/>
+                tools:text="End Date: 0000-00-00" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_start_time"
@@ -84,11 +84,11 @@
                 android:gravity="center"
                 android:text="@{`Start Time: `+date_time.startTimeToDisplayTime}"
                 android:textSize="16sp"
-                tools:text="Start Time: 00:00"
+                app:layout_constraintBottom_toTopOf="@id/tv_facility_type"
                 app:layout_constraintEnd_toStartOf="@id/tv_end_time"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_shift_date"
-                app:layout_constraintBottom_toTopOf="@id/tv_facility_type"/>
+                tools:text="Start Time: 00:00" />
 
 
             <com.google.android.material.textview.MaterialTextView
@@ -97,11 +97,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@{`End Time: `+date_time.endTimeToDisplayTime}"
+                app:layout_constraintBottom_toTopOf="@id/tv_facility_type"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_start_time"
                 app:layout_constraintTop_toBottomOf="@id/tv_shift_date"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tv_facility_type"
-                tools:text="End Time: 00:00"/>
+                tools:text="End Time: 00:00" />
 
 
             <com.google.android.material.textview.MaterialTextView
@@ -109,35 +109,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{`Facility Type: `+shifts.facilityType.name}"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/tv_localized_specialty"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_start_time"
-                app:layout_constraintBottom_toTopOf="@id/tv_specialty"
-                tools:text="Facility Type"
-                android:textSize="14sp" />
+                tools:text="Facility Type" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_specialty"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_localized_specialty"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{`Localized Specialty: `+shifts.localizedSpecialty.name}"
-                tools:text="Localized Specialty"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_facility_type"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_distance"
-                android:textSize="14sp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_facility_type"
+                tools:text="Localized Specialty" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_specialty"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@{`Distance: `+shifts.withinDistance}"
-                tools:text="Distance"
                 android:textSize="14sp"
-                android:textStyle="italic"/>
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_localized_specialty"
+                tools:text="Distance" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

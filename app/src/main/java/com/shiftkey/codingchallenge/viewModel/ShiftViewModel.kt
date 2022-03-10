@@ -23,7 +23,7 @@ class ShiftViewModel constructor(private val repo: Repository) : ViewModel() {
 
     fun fetchShifts(){
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = repo.getShifts(lat= "33", lng="-97", radius= "20", start="2022-03-08", end="2022-03-15")
+            val response = repo.getShifts(lat= "33", lng="-97", radius= "20", start="2022-03-09", end="2022-03-16")
             withContext(Dispatchers.Main){
                 if (response.isSuccessful){
                     _shiftList.postValue(response.body()?.data?.flatMap { it?.shifts!! })
@@ -34,11 +34,6 @@ class ShiftViewModel constructor(private val repo: Repository) : ViewModel() {
             }
         }
     }
-//    fun fetchShifts(){ need to fix the element
-//        viewModelScope.launch {
-//            shiftList.postValue(repo.getShifts(lat= "33", lng="-97", radius= "20", start="2022-03-08", end="2022-03-15"))
-//        }
-//    }
 
     private fun onError(message: String) {
         errorMessage.postValue(message)

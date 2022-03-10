@@ -1,13 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.DetailsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+        <variable
+            name="shiftDetails"
+            type="com.shiftkey.codingchallenge.model.ShiftsItem" />
+
+        <variable
+            name="date_time"
+            type="com.shiftkey.codingchallenge.utils.FormattedDateTimeUtil" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@color/sandy_brown"
+        tools:context=".view.DetailsFragment">
 
-</FrameLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_shift_kind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="@{`Shift Type: `+shiftDetails.shiftKind}"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Shift Type: Night Shit" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_shift_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:gravity="start"
+            android:text="@{`Start Date: `+date_time.formattedStartDate}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_start_time"
+            app:layout_constraintEnd_toStartOf="@id/tv_end_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_shift_kind"
+            tools:text="Start Date: 0000-00-00" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@color/cardview_shadow_end_color"
+            android:gravity="end"
+            android:text="@{`End Date: `+date_time.formattedEndDate}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_end_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_shift_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_shift_kind"
+            tools:text="End Date: 0000-00-00" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{`Start Time: `+date_time.startTimeToDisplayTime}"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/tv_facility_type"
+            app:layout_constraintEnd_toStartOf="@id/tv_end_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_shift_date"
+            tools:text="Start Time: 00:00" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{`End Time: `+date_time.endTimeToDisplayTime}"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/tv_facility_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_start_time"
+            app:layout_constraintTop_toBottomOf="@id/tv_shift_date"
+            tools:text="End Time: 00:00" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_facility_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{`Facility Type: `+shiftDetails.facilityType.name}"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/tv_facility_skill"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_start_time"
+            tools:text="Facility Type" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_facility_skill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{`Skill: `+shiftDetails.skill.name}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_localized_specialty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_facility_type"
+            tools:text="Facility Type" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_localized_specialty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{`Localized Specialty Name: `+shiftDetails.localizedSpecialty.name}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_localized_specialty_abb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_facility_skill"
+            tools:text="Localized Specialty Name" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_localized_specialty_abb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{`Localized Specialty Abbreviation: `+shiftDetails.localizedSpecialty.abbreviation}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_specialty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_localized_specialty"
+            tools:text="Localized Specialty Abbreviation" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_specialty"
+            android:layout_width="0dp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            android:text="@{`Specialty Name: `+shiftDetails.localizedSpecialty.specialty.name}"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_specialty_abb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_localized_specialty_abb"
+            tools:text="Specialty Name" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_specialty_abb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="@{`Specialty Abbreviation: `+shiftDetails.localizedSpecialty.specialty.abbreviation}"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_distance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_specialty"
+            tools:text="Specialty Abbreviation" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`Distance Within: `+shiftDetails.withinDistance}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_specialty_abb"
+            tools:text="Distance" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
